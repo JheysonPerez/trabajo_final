@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Compras</title>
+    <link rel="stylesheet" href="/static/vista_usuario.css">
+</head>
+<body>
+    <div class="user-view-container">
+        <header>
+            <h1>Historial de Compras del Usuario</h1>
+            <p>Ingrese sus datos para ver los productos comprados.</p>
+        </header>
+        <section class="form-section">
+            <form action="/vista_usuario" method="GET">
+                <div class="input-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="" required aria-label="Nombre">
+                </div>
+                <div class="input-group">
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" id="apellidos" name="apellidos" placeholder="" required aria-label="Apellidos">
+                </div>
+                <button type="submit" class="btn-submit">Consultar Historial</button>
+            </form>
+        </section>
+        <section class="history-section">
+            {% if historial %}
+                <h2>Productos Comprados</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha de Registro</th>
+                            <th>Descripción</th>
+                            <th>Valor Estimado</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for articulo in historial %}
+                            <tr>
+                                <td>{{ articulo.fecha_registro }}</td>
+                                <td>{{ articulo.descripcion }}</td>
+                                <td>{{ articulo.valor_estimado }}</td>
+                                <td>{{ articulo.estado }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="no-data">No se encontraron productos comprados para este usuario.</p>
+            {% endif %}
+        </section>
+    </div>
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            setTimeout(() => {
+                alert('Historial de productos consultado con éxito!');
+                form.submit();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
